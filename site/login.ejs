@@ -1,0 +1,39 @@
+<% layout('layout') %>
+
+<div id="login-wrapper" style="width:100vw; height: 100vh;">
+    <div class="container" id="login">
+        <div class="row">
+            <div id="error-wrapper" class="col s12 m8 red l6 offset-m2 offset-l3 card hide">
+                <div class="card-content">
+                    <div class="card-title">
+                        <p class="title">Oops..</p>
+                    </div>
+                    <p id="error-message"></p>
+                </div>
+            </div>
+            <div class="col s12 m8 l6 offset-m2 offset-l3 card">
+                <form method="POST" action="api/login">
+                    <div class="container">
+                        <h4>Login</h4>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input name="email" id="email" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input name="password" id="password" type="password" class="validate">
+                                <label for="password">Password</label>
+                            </div>
+                            <button id="submit" class="btn right">Submit</button>
+                            <p>You don`t have an account? <a href="/register">Create it now!</a></p>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content-wrapper" style="width:100vw; height:100vh; display:none">
+
+</div>

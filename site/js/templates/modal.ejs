@@ -1,0 +1,52 @@
+<div id="modal" class='modal modal-fixed-footer col m4 l4'>
+    <div class="modal-content">
+        <% if(type=="edit") { %>
+        <h4>Edit</h4>
+        <% } else {%>
+        <h4>Add new <%= type %></h4>
+        <% } %>
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <input type="text" class="validate" placeholder="default entry" name="name" id="name"/>
+                <label class="active" for="name">Name:</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <input type="text" class="validate" placeholder="default entry" name="value" id="value"/>
+                <label class="active" for="value">Value:</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <select id="category" name="category">
+                    <% for(var i in categories) { %>
+                    <option value="<%= categories[i].get('id') %>" name="<%= categories[i].get('name') %>"><%=
+                            categories[i].get('name') %>
+                    </option>
+                    <% } %>
+                </select>
+                <label for="category">Category:</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <input type="date" class="datepicker" name="date" id="date"/>
+                <label class="active" for="date">Date:</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <% if(type=="income") { %>
+        <button class="btn-flat  waves-effect" id="addIncome">Add Income</button>
+        <% }else if(type=="expense") { %>
+        <button class="btn-flat  waves-effect" id="addExpense">Add Expense</button>
+        <% }else if(type=="edit") { %>
+        <button class="btn-flat  waves-effect" id="editEntry">Done</button>
+        <% } %>
+    </div>
+</div>

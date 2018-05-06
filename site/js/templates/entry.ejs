@@ -1,0 +1,26 @@
+<td id="name"><%= name %></td>
+<td class="<%= className %>" id="value"><%= value %> RON
+    <% if (className == 'income') { %>
+    <i class="material-icons">arrow_drop_up</i>
+    <% } else { %>
+    <i class="material-icons">arrow_drop_down</i>
+    <% } %>
+</td>
+<td>
+        <span class="task-cat <%= categoryColor %>" id="category">
+            <a href="/category/<%= category %>"><%= category %></a>
+        </span>
+</td>
+<td id="date"><%= date %></td>
+<td>
+    <a id="edit" href="javascript:void(0);" class=" btn-flat waves-effect">
+            <span class="badge tooltipped" data-position="top" data-tooltip="Edit" data-delay="50">
+                <i id="edit" class="material-icons right">edit</i>
+            </span>
+    </a>
+    <a id="delete" href="javascript:void(0);" class=" btn-flat waves-effect">
+            <span class="badge tooltipped" data-position="top" data-tooltip="Delete" data-delay="50">
+                <i id="delete" class="material-icons" data-type="<%= type %>">close</i>
+            </span>
+    </a>
+</td>

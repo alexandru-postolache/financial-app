@@ -1,0 +1,211 @@
+<script type="text/template" id="entry-template">
+    <td id="name"><%= name %></td>
+    <td class="<%= className %>" id="value"><%= value %> RON
+        <% if (className == 'income') { %>
+        <i class="material-icons">arrow_drop_up</i>
+        <% } else { %>
+        <i class="material-icons">arrow_drop_down</i>
+        <% } %>
+    </td>
+    <td>
+        <span class="task-cat <%=categoryColor %>" id="category">
+            <a href="/category/<%= category %>"><%=category %></a>
+        </span>
+    </td>
+    <td id="date"><%= date %></td>
+    <td>
+        <a id="edit" href="javascript:void(0);" class=" btn-flat waves-effect">
+            <span class="badge tooltipped" data-position="top" data-tooltip="Edit" data-delay="50">
+                <i id="edit" class="material-icons right">edit</i>
+            </span>
+        </a>
+        <a id="delete" href="javascript:void(0);" class=" btn-flat waves-effect">
+            <span class="badge tooltipped" data-position="top" data-tooltip="Delete" data-delay="50">
+                <i id="delete" class="material-icons" data-type="<%= type %>">close</i>
+            </span>
+        </a>
+    </td>
+</script>
+
+<script type="text/template" id="modal-template">
+    <div id="modal" class='modal modal-fixed-footer col m4 l4'>
+        <div class="modal-content">
+            <% if(type=="edit") { %>
+            <h4>Edit</h4>
+            <% } else {%>
+            <h4>Add new <%= type %></h4>
+            <% } %>
+            <div class="row">
+                <div class="input-field col s12 m12">
+                    <input type="text" class="validate" placeholder="default entry" name="name" id="name"/>
+                    <label class="active" for="name">Name:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m12">
+                    <input type="text" class="validate" placeholder="default entry" name="value" id="value"/>
+                    <label class="active" for="value">Value:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m12">
+                    <select id="category" name="category">
+                        <% for(var i in categories) { %>
+                        <option value="<%= categories[i].get('id') %>" name="<%= categories[i].get('name') %>"><%=
+                                categories[i].get('name') %>
+                        </option>
+                        <% } %>
+                    </select>
+                    <label for="category">Category:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m12">
+                    <input type="date" class="datepicker" name="date" id="date"/>
+                    <label class="active" for="date">Date:</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <% if(type=="income") { %>
+            <button class="btn-flat  waves-effect" id="addIncome">Add Income</button>
+            <% }else if(type=="expense") { %>
+            <button class="btn-flat  waves-effect" id="addExpense">Add Expense</button>
+            <% }else if(type=="edit") { %>
+            <button class="btn-flat  waves-effect" id="editEntry">Done</button>
+            <% } %>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="category-modal">
+    <div id="category-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Add a new category</h4>
+            <div class="row">
+                <div class="input-field col s12 m12">
+                    <input type="text" name="category" id="category">
+                    <label for="category">Category name:</label>
+                </div>
+                <div class="input-field col s12 m12">
+                    <select data-color="red" name="category-type" id="category-type">
+                        <option value="1">Income</option>
+                        <option value="2">Expense</option>
+                    </select>
+                    <label for="category-type">Category type:</label>
+                </div>
+                <div class="input-field col s12 m12">
+                    <select name="color" id="color">
+
+                    </select>
+                    <label for="color">Choose a color for this category:</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-flat modal-close waves-effect" id="addCategory">Add Category</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="graph-template">
+    <div class="card <%= backgroundColor %> waves-effect waves-block waves-light">
+        <div class="card-content white-text">
+            <div class="card-title">
+                <span class="card-title"><%= title %></span>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="<%= canvasId %>" height="<%= height %>" width="<%= width %>"></canvas>
+                <% if(legendClass) { %>
+                <div class="legend <%= legendClass %>"></div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="stats-template">
+    <div class="row">
+        <div class="col s12 m10 l8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-title">
+                        <h4 class="card-title">Choose the time period for the stats:</h4>
+                    </div>
+                    <h7>Start date:</h7>
+                    <input type="date" id="start-date"/>
+                    <h7>End date:</h7>
+                    <input type="date" id="end-date"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l8">
+            <%= expensesPerMonth  %>
+        </div>
+        <div class="col s12 m12 l4">
+            <%= expensesPerCategory %>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="dashboard-template">
+    <div class="row">
+        <div class="col s12 m12 l8">
+            <div id="transactions" class="card">
+                <div class="card-content">
+                    <div class="card-title"><span id="table-title" class="card-title"></span></div>
+                    <table class="responsive-table highlight" id="transactions-wrapper">
+                        <thead>
+                        <tr>
+                            <th data-field="name">Name</th>
+                            <th data-field="value">Value</th>
+                            <th data-field="category">Category</th>
+                            <th data-field="date">Date</th>
+                            <th data-field="actions">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% var i = 0; %>
+                        <% if(context == 'dashboard') { %>
+
+                        <% }else if(context == 'incomes' || context == 'expenses') { %>
+                        <% var pages = Math.floor(totalEntries / 10); %>
+                        <% if(totalEntries % 10 && totalEntries > 9) { pages++ } %>
+                        <tr>
+                            <td colspan="5" class="center">
+                                <ul class="pagination">
+                                    <% if(!pages) { pages = 1; } %>
+                                    <% if(activePageNumber == 1) { %>
+                                    <li class="disabled"><a href="<%= context %>/1"><i class="material-icons">chevron_left</i></a></li>
+                                    <% }else { %>
+                                    <li class="waves-effect"><a href="<%= context %>/<%= parseInt(activePageNumber) - 1%>"><i class="material-icons">chevron_left</i></a></li>
+                                    <% } %>
+                                    <% for(i = 1; i <= pages; i++) { %>
+                                    <% if(activePageNumber == i) { %>
+                                    <li class="active"><a href="/<%= context %>/<%= i %>"><%= i %></a></li>
+                                    <% }else { %>
+                                    <li class="waves-effect"><a href="/<%= context %>/<%= i %>"><%= i %></a></li>
+                                    <% } %>
+                                    <% } %>
+                                    <% if(activePageNumber == pages) { %>
+                                    <li class="disabled"><a href="/<%= context %>/<%= activePageNumber %>"><i class="material-icons">chevron_right</i></a></li>
+                                    <% }else { %>
+                                    <li class="waves-effect"><a href="/<%= context %>/<%= parseInt(activePageNumber) + 1 %>"><i class="material-icons">chevron_right</i></a></li>
+                                    <% } %>
+                                </ul>
+                            </td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

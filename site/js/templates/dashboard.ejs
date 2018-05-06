@@ -1,0 +1,49 @@
+<div class="row" id="dashboard">
+    <div class="col s12 m12 l8">
+        <div id="transactions" class="card">
+            <div class="card-content">
+                <div class="card-title"><span id="table-title" class="card-title"></span></div>
+                <table class="responsive-table highlight" id="transactions-wrapper">
+                    <thead>
+                    <tr>
+                        <th data-field="name">Name</th>
+                        <th data-field="value">Value</th>
+                        <th data-field="category">Category</th>
+                        <th data-field="date">Date</th>
+                        <th data-field="actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% var i = 0; %>
+                    <% if(context == 'dashboard') { %>
+
+                    <% }else if(context == 'incomes' || context == 'expenses') { %>
+                    <% var pages = Math.floor(totalEntries / 10); %>
+                    </tbody>
+                </table>
+                <% if(totalEntries % 10 && totalEntries > 9) { pages++ } %>
+                        <ul class="pagination">
+                            <% if(!pages) { pages = 1; } %>
+                            <% if(activePageNumber == 1) { %>
+                            <li class="disabled"><a href="<%= context %>/1"><i class="material-icons">chevron_left</i></a></li>
+                            <% }else { %>
+                            <li class="waves-effect"><a href="<%= context %>/<%= parseInt(activePageNumber) - 1%>"><i class="material-icons">chevron_left</i></a></li>
+                            <% } %>
+                            <% for(i = 1; i <= pages; i++) { %>
+                            <% if(activePageNumber == i) { %>
+                            <li class="active"><a href="/<%= context %>/<%= i %>"><%= i %></a></li>
+                            <% }else { %>
+                            <li class="waves-effect"><a href="/<%= context %>/<%= i %>"><%= i %></a></li>
+                            <% } %>
+                            <% } %>
+                            <% if(activePageNumber == pages) { %>
+                            <li class="disabled"><a href="/<%= context %>/<%= activePageNumber %>"><i class="material-icons">chevron_right</i></a></li>
+                            <% }else { %>
+                            <li class="waves-effect"><a href="/<%= context %>/<%= parseInt(activePageNumber) + 1 %>"><i class="material-icons">chevron_right</i></a></li>
+                            <% } %>
+                        </ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

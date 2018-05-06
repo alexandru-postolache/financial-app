@@ -1,0 +1,13 @@
+<div class="card <%= backgroundColor %> waves-effect waves-block waves-light">
+    <div class="card-content white-text">
+        <div class="card-title">
+            <span class="card-title"><%= title %></span>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="<%= canvasId %>" height="<%= height %>" width="<%= width %>"></canvas>
+            <% if(legendClass) { %>
+            <div class="legend <%= legendClass %>"></div>
+            <% } %>
+        </div>
+    </div>
+</div>

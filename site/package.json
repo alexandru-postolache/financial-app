@@ -1,0 +1,12 @@
+{
+  "name": "financial-app",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery" : "2.2.3",
+    "backbone" : "1.3.3",
+    "backbone-validation": "0.11.5",
+    "materialize-css": "0.97.6",
+    "chart.js": "1.x",
+    "ejs": "2.4.1"
+  }
+}
